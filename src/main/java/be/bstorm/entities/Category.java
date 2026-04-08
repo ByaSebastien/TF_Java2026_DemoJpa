@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Categorie metier d'un produit.
+ *
+ * <p>Cette entite montre le mapping le plus simple: une cle primaire generee et
+ * une colonne metier unique.</p>
+ */
 @Entity
 public class Category {
 
@@ -17,6 +23,7 @@ public class Category {
 
 //    @OneToMany(mappedBy = "category")
 //    private List<Product> products;
+// Relation inverse possible si vous voulez naviguer Category -> Product.
 
     public Category() {}
 

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Utilisateur de l'application.
+ *
+ * <p>Cette entite demontre deux concepts utiles pour debuter:
+ * {@code @Embedded} (adresse inline) et {@code @ManyToMany} (favoris).</p>
+ */
 @Entity
 @Table(name = "user_")
 public class User {
@@ -21,6 +27,7 @@ public class User {
     private Address address;
 
     @ManyToMany
+    // Hibernate cree une table de jointure user__favorites par defaut.
     private List<Product> favorites = new ArrayList<>();
 
     public User() {}

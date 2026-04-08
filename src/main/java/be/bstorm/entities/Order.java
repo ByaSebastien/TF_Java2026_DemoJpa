@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Commande metier identifiee par UUID.
+ *
+ * <p>Le nom de table est force a {@code order_} car {@code order} est souvent
+ * reserve en SQL.</p>
+ */
 @Entity
 @Table(name = "order_")
 public class Order {

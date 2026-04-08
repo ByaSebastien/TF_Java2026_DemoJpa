@@ -4,6 +4,13 @@ import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
 
+/**
+ * Objet valeur embarquable dans une entite.
+ *
+ * <p>Comme la classe est annotee {@code @Embeddable}, ses champs seront ranges
+ * dans la table de l'entite proprietaire (ex: {@code User}) au lieu d'avoir
+ * une table {@code address} separee.</p>
+ */
 @Embeddable
 public class Address {
 

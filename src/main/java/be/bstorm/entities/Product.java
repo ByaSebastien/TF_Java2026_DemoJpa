@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Produit vendable du catalogue.
+ *
+ * <p>Cette entite combine colonnes simples et relation {@code ManyToOne}
+ * vers {@link Category}.</p>
+ */
 @Entity
 @Table(name = "produit") // renommer la table (optionel)
 public class Product {
@@ -59,6 +65,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Niveau de stock associe a un produit.
+ *
+ * <p>Le mapping {@code @OneToOne} exprime qu'un produit a au plus un enregistrement
+ * de stock dans ce modele.</p>
+ */
 @Entity
 public class Stock {
 

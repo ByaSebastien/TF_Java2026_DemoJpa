@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Ligne de commande (association entre une commande et un produit).
+ *
+ * <p>Cette classe illustre un cas classique de cle primaire composite:
+ * {@code (orderId, productId)}.</p>
+ */
 @Entity
 public class OrderLine {
 
@@ -15,10 +21,12 @@ public class OrderLine {
     private int quantity;
 
     @ManyToOne
+    // @MapsId lie la FK order au champ orderId de la cle composite.
     @MapsId("orderId")
     private Order order;
 
     @ManyToOne
+    // @MapsId lie la FK product au champ productId de la cle composite.
     @MapsId("productId")
     private Product product;
 
@@ -82,6 +90,9 @@ public class OrderLine {
     }
 
     @Embeddable
+    /**
+     * Cle primaire composite de {@link OrderLine}.
+     */
     public static class OrderLineId {
         private UUID orderId;
         private Long productId;
