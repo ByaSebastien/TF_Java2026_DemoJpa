@@ -448,52 +448,89 @@ Pour les cles composites:
 
 ## Diagramme des relations
 
+### Vue textuelle
+
+```
+Category (1) ──────► Product (N) ──────► Stock (1)
+                          │
+                          │ (ManyToMany)
+                          ▼
+                        User ──── Favoris
+
+Order (1) ──────► OrderLine (N) ◄────── Product (N)
+```
+
+**Resume des relations:**
+- `Category` → `Product` : **ManyToOne** (plusieurs produits par categorie)
+- `Product` ↔ `Stock` : **OneToOne** (un stock par produit)
+- `User` ↔ `Product` : **ManyToMany** (favoris, table de jointure)
+- `Order` → `OrderLine` : **OneToMany** (plusieurs lignes par commande)
+- `Product` → `OrderLine` : **OneToMany** (plusieurs lignes pour ce produit)
+
+---
+
+### Diagramme detaille (Mermaid)
+
 ```mermaid
 erDiagram
-    CATEGORY ||--o{ PRODUCT : "1-N"
-    PRODUCT ||--|| STOCK : "1-1"
-    PRODUCT }o--|| USER : "M-N : favoris"
-    USER ||--o{ ORDER_LINE : ""
-    ORDER ||--o{ ORDER_LINE : "1-N"
-    PRODUCT ||--o{ ORDER_LINE : "1-N"
+    CATEGORY ||--o{ PRODUCT : "ManyToOne"
+    PRODUCT ||--|| STOCK : "OneToOne"
+    PRODUCT }o--|| USER : "ManyToMany (favoris)"
+    ORDER ||--o{ ORDER_LINE : "OneToMany"
+    PRODUCT ||--o{ ORDER_LINE : "OneToMany"
 
     CATEGORY {
-        long id PK
-        string name UK
+        bigint id PK "auto-increment"
+        varchar name UK "50 chars, NOT NULL, UNIQUE"
     }
 
     PRODUCT {
-        long id PK
-        string nom UK
-        int prix
-        string description
-        long category_id FK
+        bigint id PK "auto-increment"
+        varchar nom UK "50 chars, NOT NULL, UNIQUE"
+        int prix "NOT NULL"
+        varchar description "500 chars, nullable"
+        bigint category_id FK "REFERENCES category(id)"
     }
 
     STOCK {
-        int id PK
-        int quantity
-        long product_id FK "UNIQUE"
+        int id PK "auto-increment"
+        int quantity "NOT NULL"
+        bigint product_id FK "UNIQUE - OneToOne constraint"
     }
 
     USER {
-        int id PK
-        string email UK
-        string city
-        string street
-        string zipcode
+        int id PK "auto-increment"
+        varchar email UK "150 chars, NOT NULL, UNIQUE"
+        varchar city "Address.city (embedded)"
+        varchar street "Address.street (embedded)"
+        varchar zipcode "Address.zipcode (embedded)"
+    }
+
+    USER__FAVORITES {
+        int user_id FK "PK part"
+        bigint favorites_id FK "PK part, REFERENCES produit(id)"
     }
 
     ORDER {
-        uuid id PK
+        uuid id PK "NOT auto-generated, manual UUID"
     }
 
     ORDER_LINE {
-        uuid order_id FK "PK"
-        long product_id FK "PK"
-        int quantity
+        uuid order_id FK "PK part, REFERENCES order_(id)"
+        bigint product_id FK "PK part, REFERENCES produit(id)"
+        int quantity "NOT NULL"
     }
 ```
+
+**Legende:**
+- **PK** = Primary Key (cle primaire)
+- **FK** = Foreign Key (cle etrangere)
+- **UK** = Unique Key (contrainte unique)
+- **||** = exactement 1
+- **o{** = 0 ou plusieurs
+- **||--o{** = One-To-Many (1 vers N)
+- **||--||** = One-To-One (1 vers 1)
+- **}o--||** = Many-To-Many (N vers N)
 
 ### Explication du diagramme
 
