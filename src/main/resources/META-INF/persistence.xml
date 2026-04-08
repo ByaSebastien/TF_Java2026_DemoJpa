@@ -8,7 +8,12 @@
     <persistence-unit name="DemoJPA" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <class>be.bstorm.entities.Category</class>
+        <class>be.bstorm.entities.Order</class>
+        <class>be.bstorm.entities.OrderLine</class>
         <class>be.bstorm.entities.Product</class>
+        <class>be.bstorm.entities.Stock</class>
+        <class>be.bstorm.entities.User</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/demojpa"/>

@@ -17,13 +17,17 @@ public class User {
     @Column(length = 150, nullable = false, unique = true)
     private String email;
 
+    @Embedded
+    private Address address;
+
     @ManyToMany
     private List<Product> favorites = new ArrayList<>();
 
     public User() {}
 
-    public User(String email) {
+    public User(String email, Address address) {
         this.email = email;
+        this.address = address;
     }
 
     public int getId() {
@@ -36,6 +40,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public List<Product> getFavorites() {
